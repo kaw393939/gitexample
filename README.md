@@ -1,5 +1,1 @@
-<?php
- 
-   echo 'hello world';
-
-?>
+This repository contains example PHP programs
