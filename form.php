@@ -1,25 +1,29 @@
 <?php  
 session_start();
-$_SESSION['page_count'] = 1;
+if (!isset($_SESSION['count']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+  $_SESSION['count'] = 0;
+} else {
+  $_SESSION['count']++;
+  $transaction = array();
+  $transaction['type'] = $_POST['trans_type'];
+  $transaction['amount'] = $_POST['amount'];
+  $_SESSION['transactions'][] = $transaction;
+}
 
-if(!isset($_SESSION['page_count'])) {
-  $_SESSION['page_count'] = $_SESSION['page_count'] + 1;
-} 
+print_r($_SESSION);
 
+echo $_SESSION['count'] . '<br>';
 
-echo $_SESSION['page_count'] . '<br>';
+//session_destroy();
+
 
 $form = '
 <FORM action="form.php" method="post">
     <fieldset>
-    <LABEL for="firstname">First name: </LABEL>
-              <INPUT type="text" name="firstname" id="firstname"><BR>
-    <LABEL for="lastname">Last name: </LABEL>
-              <INPUT type="text" name="lastname" id="lastname"><BR>
-    <LABEL for="email">email: </LABEL>
-              <INPUT type="text" name="email" id="email"><BR>
-    <INPUT type="radio" name="sex" value="Male"> Male<BR>
-    <INPUT type="radio" name="sex" value="Female"> Female<BR>
+    <LABEL for="amount">Amount: </LABEL>
+              <INPUT type="text" name="amount" id="lastname"><BR>
+    <INPUT type="radio" name="trans_type" value="debt"> Debit<BR>
+    <INPUT type="radio" name="trans_type" value="credit"> Credit<BR>
     <INPUT type="submit" value="Send"> <INPUT type="reset">
     </fieldset>
  </FORM>';
