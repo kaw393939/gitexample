@@ -1,6 +1,6 @@
-<?php echo 'Request method: ' . $_SERVER['REQUEST_METHOD']; ?>
+<?php echo 'Request method: ' . $_SERVER['REQUEST_METHOD']; 
 
-
+$form = '
 <FORM action="form.php" method="post">
     <fieldset>
     <LABEL for="firstname">First name: </LABEL>
@@ -13,11 +13,30 @@
     <INPUT type="radio" name="sex" value="Female"> Female<BR>
     <INPUT type="submit" value="Send"> <INPUT type="reset">
     </fieldset>
- </FORM>
+ </FORM>';
 
-<?php print_r($_POST);
+  if($_SERVER['REQUEST_METHOD'] == 'GET') {
+     echo $form;
+  } else {
 
-  //print_r($_SERVER);
-
+     echo 'Thank you and this is what you sent: <br>';
+     foreach($_POST as $key => $value) {
+        echo $key . ': ' . $value . '<br>';
+     }   
+  }
 
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
