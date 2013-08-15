@@ -97,9 +97,14 @@
       }
     }  
     public function writeTransactions() {
+    
+//This is how you open the file for writing, $fp contains the file pointer.  The directory must be writable i.e. chmod -R 777 write.  The path is relative, but it can also be absolute, it is just like if you were typing the command in the linux terminal.
       $fp = fopen('write/file.csv', 'w');
+//this is looping through the transactions array stored in the session array
       foreach($_SESSION['transactions'] as $transaction) {
+//This step converts the public properties of the transaction object to an array, this must be done because the function fputcsv will only take an array.  Transaction is an object and not an array prior to this step, so that transaction can have methods.  The (array) converts the object to array, this is called type casting.
         $transact = (array) $transaction;
+//This built in function fputcsv takes in a file pointer ($fp) and an array $transact and writes out the file.
         fputcsv($fp, $transact);
       }
     }
