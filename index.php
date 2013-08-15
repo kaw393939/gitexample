@@ -29,15 +29,18 @@
 //This line adds the transaction data from the POST
            $transactions->addTransaction($_POST['type'],$_POST['amount'],$_POST['source']);
 //This line is a PHP command that will forward the request back to the form.
-           header('Location: http://www.mywebclass.org/gitexample/index.php?page=bankform');
+           header('Location: ./index.php?page=bankform');
 //This else statement is run if there are no more transactions.
          } else {
 //This adds the last transaction in the POST and then the next line prints the transactions;
            $transactions->addTransaction($_POST['type'],$_POST['amount'],$_POST['source']);
            $transactions->printTransactions();
-         } 
-       }   
-    }  
+           $transactions->writeTransactions(); 
+	} 
+       }    
+    }  elseif($_REQUEST['page'] == 'about') {
+	 echo 'about';
+       }
 
 
 
@@ -45,10 +48,9 @@
     }
 //this is the home page
     function homepage() {
-      
       echo 'hello welcome to my program <br>';
       echo '<a href="./index.php?page=bankform">Click to View Bank Form</a>';
-
+      echo '<a href="./index.php?page=about">About Page</a>';
     }
 //this displays the brain bank form, we could probably replace this by just displaying the form and not have it create the object.
     function bankform() {
@@ -93,7 +95,31 @@
 	$transaction->printTransaction();
       }
     }  
-  
+    public function writeTransactions() {
+      $fp = fopen('write/file.csv', 'w');
+      //$transactions = (array) $_SESSION['transactions'];
+      foreach($_SESSION['transactions'] as $transaction) {
+        $transact = (array) $transaction;
+        fputcsv($fp, $transact);
+      }
+    }
+    public function readTransactions() {
+      $row = 1;
+if (($handle = fopen("example.csv", "r")) !== FALSE) {
+    while (($record = fgetcsv($handle, 0, ",")) !== FALSE) {
+      if($row == 1) {
+         $keys = $record;
+         $row++;
+         print_r($record);
+      } else {
+        $records[] = array_combine($keys, $record); 
+      }   
+   
+    }   
+    fclose($handle);
+}
+
+    } 
   }
 //this is the transaction class, it is basiclly used to store the data.
   class transaction  {
