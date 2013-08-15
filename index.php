@@ -97,7 +97,6 @@
     }  
     public function writeTransactions() {
       $fp = fopen('write/file.csv', 'w');
-      //$transactions = (array) $_SESSION['transactions'];
       foreach($_SESSION['transactions'] as $transaction) {
         $transact = (array) $transaction;
         fputcsv($fp, $transact);
