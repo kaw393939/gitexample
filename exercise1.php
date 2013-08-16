@@ -6,7 +6,7 @@
   $account->credit(500);
   $account->credit(1000);
   $account->run();
-//  print_r($account);
+  print_r($account);
   class account {
     public $starting_balance;
     public $current_balance;
@@ -24,10 +24,10 @@
      $this->transactions[]['credit'] = $amount;
     }
     public function run() {
-     echo 'Starting Balance: ' . $this->starting_balance . '<br>'; 
+     echo 'Starting Balance: ' . $this->starting_balance . '<br>'. "\n"; 
      foreach($this->transactions as $transaction) {
        foreach($transaction as $key => $value) { 
-        echo $key . ': ' . $value . '<br>';
+        echo $key . ': ' . $value . '<br>' . "\n";
         if($key == 'debit') {
           $this->current_balance = $this->current_balance - $value;
         } else {
